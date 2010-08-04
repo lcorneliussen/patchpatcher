@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatchPatcher.Console", "PatchPatcher.Console\PatchPatcher.Console.csproj", "{B68FB701-A56D-48C2-A7E0-08FCBFA5EF8A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatchPatcher.Web", "PatchPatcher.Web\PatchPatcher.Web.csproj", "{E2848FCA-6287-455B-9102-731ADD1B2B6D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatchPatcher", "PatchPatcher\PatchPatcher.csproj", "{6AE1D14C-84D7-44E4-B9D0-D0945C9B6BAE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B68FB701-A56D-48C2-A7E0-08FCBFA5EF8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B68FB701-A56D-48C2-A7E0-08FCBFA5EF8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B68FB701-A56D-48C2-A7E0-08FCBFA5EF8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B68FB701-A56D-48C2-A7E0-08FCBFA5EF8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2848FCA-6287-455B-9102-731ADD1B2B6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2848FCA-6287-455B-9102-731ADD1B2B6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2848FCA-6287-455B-9102-731ADD1B2B6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2848FCA-6287-455B-9102-731ADD1B2B6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AE1D14C-84D7-44E4-B9D0-D0945C9B6BAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AE1D14C-84D7-44E4-B9D0-D0945C9B6BAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AE1D14C-84D7-44E4-B9D0-D0945C9B6BAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AE1D14C-84D7-44E4-B9D0-D0945C9B6BAE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
