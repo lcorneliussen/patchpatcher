@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatchPatcher.Console", "PatchPatcher.Console\PatchPatcher.Console.csproj", "{B68FB701-A56D-48C2-A7E0-08FCBFA5EF8A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatchPatcher.Web", "PatchPatcher.Web\PatchPatcher.Web.csproj", "{E2848FCA-6287-455B-9102-731ADD1B2B6D}"
