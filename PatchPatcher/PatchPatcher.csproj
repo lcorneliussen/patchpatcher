@@ -10,12 +10,28 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PatchPatcher</RootNamespace>
     <AssemblyName>PatchPatcher</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,6 +51,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GithubSharp.Core">
+      <HintPath>..\Lib\GithubSharp.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="GithubSharp.Plugins.CacheProviders.WebCache">
+      <HintPath>..\Lib\GithubSharp.Plugins.CacheProviders.WebCache.dll</HintPath>
+    </Reference>
+    <Reference Include="Moq">
+      <HintPath>..\Lib\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=2.5.2.9222, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\nunit.framework.dll</HintPath>
@@ -44,9 +69,6 @@
       <HintPath>..\Lib\SharpTestsEx.NUnit.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -58,6 +80,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CorrectNullReferencesStep.cs" />
+    <Compile Include="Github\GithubApi.cs" />
+    <Compile Include="Github\IGithubApi.cs" />
+    <Compile Include="Github\IUrlBuilder.cs" />
+    <Compile Include="Github\NoOpLogger.cs" />
+    <Compile Include="Github\Tests\UrlAnalyzerTests.cs" />
+    <Compile Include="Github\UrlAnalyzer.cs" />
+    <Compile Include="Github\UrlAnalyzeResult.cs" />
+    <Compile Include="Github\UrlBuilder.cs" />
     <Compile Include="IConversionStep.cs" />
     <Compile Include="InsertTortoiseSegmentationLineStep.cs" />
     <Compile Include="PrependInfoHeader.cs" />
@@ -66,6 +96,24 @@
     <Compile Include="Tests\CorrectNullReferencesStepTests.cs" />
     <Compile Include="Tests\FixRootPathStepTests.cs" />
     <Compile Include="Tests\InsertTortoiseSegmentationLineStepTests.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

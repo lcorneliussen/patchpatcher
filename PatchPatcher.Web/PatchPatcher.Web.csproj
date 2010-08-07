@@ -37,6 +37,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GithubSharp.Core, Version=1.0.3870.34647, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.ComponentModel.DataAnnotations">
@@ -72,6 +73,7 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\custom.js" />
     <Content Include="Web.config" />
     <Content Include="Scripts\jquery-1.4.1.js" />
     <Content Include="Scripts\jquery-1.4.1.min.js" />
@@ -92,7 +94,7 @@
   <ItemGroup>
     <Content Include="Views\ConvertPatch\Index.aspx" />
     <Content Include="Views\Shared\NotFound.aspx" />
-    <Content Include="Views\Site.Master" />
+    <Content Include="Views\Shared\Site.Master" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PatchPatcher\PatchPatcher.csproj">

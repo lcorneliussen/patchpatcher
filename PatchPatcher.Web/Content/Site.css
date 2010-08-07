@@ -1,3 +1,96 @@
+body {
+	background: #DAE0E5;
+	margin: 0px;
+	font-family: Arial;
+	color: #333;
+}
+
+#page {
+	width: 1024px;
+	position: relative;
+	left: 50%;
+	margin-left: -512px;
+	background: white;
+	padding: 40px;
+	border-right: 2px solid #C3D9FF;
+	border-left: 2px solid #C3D9FF;
+}
+
+h1 { font-size: 1.3em; margin: 0;}
+h2 { font-size: 1.1em; margin: 2em 0 0.8em 0;}
+
+#info {
+	background-color: #F9F7ED;
+	padding: 10px;
+	font-size:0.8em;
+	margin-top: -20px;
+	margin-bottom: 20px;
+	border: 2px dashed #FFFF88;
+}
+
+div#caption 
+{
+    color: Gray;
+    font-size: 0.8em;
+    margin-bottom: 2px;
+}
+input#path 
+{
+    padding: 6px;
+    font-size: 1.1em;
+    font-weight: bold;
+    width: 100%;
+    color: Gray;
+    border: 2px solid Gray;
+}
+
+input.error
+{
+    border-color: #ff0000 !important;
+    background-color: #ffeeee;
+}
+
+input.success
+{
+    border-color: #008C00 !important;
+    background-color: #CDEB8B;
+}
+
+div.status 
+{
+    padding-left: 10px;
+    color: Gray;
+    font-size: 10pt;
+    margin-top: 2px;
+}
+
+h3.commits 
+{
+    margin: 1em 0 0.5em 0;
+}
+
+ul.commits 
+{
+    margin-top: 0;
+    border-top:1px solid #BEDCE7;
+}
+
+ul.commits li 
+{
+    font-size: 0.9em;
+    list-style-type: none;
+    background:url("http://github.com/images/modules/commit/bg_gradient.gif") repeat-x scroll 0 100% #EAF2F5;
+    border-bottom:1px solid #BEDCE7;
+    border-left:1px solid #BEDCE7;
+    border-right:1px solid #BEDCE7;
+    padding:0.7em;
+}
+
+div.error 
+{
+    color: #ff0000;
+}
+
 /* Styles for validation helpers
 -----------------------------------------------------------*/
 .field-validation-error

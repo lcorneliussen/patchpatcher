@@ -16,13 +16,25 @@ namespace PatchPatcher.Web
             routes.MapRoute(
                 "Github-Url", // Route name
                 "github.com/{*path}", // URL with parameters
-                new {controller = "ConvertPatch", action = "Convert"} // Parameter defaults
+                new { controller = "ConvertPatch", action = "AnalyzePermaLink" } // Parameter defaults
                 );
 
             routes.MapRoute(
+               "Download Patch", // Route name
+               "download/github.com/{*path}", // URL with parameters
+               new { controller = "ConvertPatch", action = "DownloadPatch" } // Parameter defaults
+               );
+
+            routes.MapRoute(
+              "View Patch", // Route name
+              "view/github.com/{*path}", // URL with parameters
+              new { controller = "ConvertPatch", action = "ViewPatch" } // Parameter defaults
+              );
+
+            routes.MapRoute(
                 "Default", // Route name
-                "{controller}/{action}/{id}", // URL with parameters
-                new {controller = "Home", action = "Index", id = UrlParameter.Optional} // Parameter defaults
+                "{controller}/{action}", // URL with parameters
+                new { controller = "Home", action = "Index" } // Parameter defaults
                 );
         }
 

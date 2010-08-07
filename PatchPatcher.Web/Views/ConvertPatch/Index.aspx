@@ -1,19 +1,131 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Site.Master" Inherits="System.Web.Mvc.ViewPage" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <h2>Patch Patcher</h2>
-    <h3>Create a SVN patch for a single commit</h3>
-    Commit url: <input type="text" value="http://github.com/..." onchange=""/>
-    <h2>..or..</h2>
-    <h3>Compare two commits</h3>
-    Original: <input type="text" value="http://github.com/..." /><br />
-    New: <input type="text" value="http://github.com/..." />
+    <h1>Patch Patcher</h1>
+    <p>When working with git-svn in the open source world, you sometimes want to submit patches for your 
+    work that can be applied on the svn repository using TortoiseSVN. But sadly the patche formats are incompatible.</p>
+    <p>Patch Patcher creates patches that are applyable via TortoiseSVN. Just provide the github url of your branch 
+    containing the changes or a specific commit and see the magic happen. </p>
+    <p>If you do not have your changes online, you can use the commandline version to create patches from your local git repository.</p>
+
+    <div id="caption">A github commit or branch url:</div>
+    <input id="path" type="text" value="<%=ViewData["path"] %>"
+        onkeyup="scheduleAnalyzePath()" />
+    <div id="pathresult">
+        <script id="AnalysisResult" type="text/html">
+            <#if (result.IsBranch && result.SvnUrl) {#>
+                <div class="status">Detected a branch "<#= result.CommitOrBranch#>" with <#= result.Changes.length#> changes to "<#= result.SvnUrl#> (rev <#= result.SvnRevision#>)"</div>
+                
+                <h3>Options</h3>
+                <ul>
+                  <li><a href="localpatch">Download as patch</a></li>
+                  <li><a href="?path=<#= result.Path#>">Link to this overview</a></li>
+                  <li><a href="<#= result.CompareUrl #>">Show changes online</a></li>
+                </ul>
+
+                <h3 class="commits">Changes in <#= result.CommitOrBranch#></h3>
+                <ul class="commits">
+                    <# for (var pos = 0; pos < result.Changes.length; pos++) {#>
+                        <#= parseTemplate(commitTemplate, result.Changes[pos]) #>
+                    <# } #>
+                </ul>
+                
+                <h3 class="commits">Based on r<#= result.SvnRevision#> in <#= result.SvnUrl#></h3>
+                <ul class="commits">
+                    <#= parseTemplate(commitTemplate, result.LastSvnCommit) #>
+                </ul>
+
+                <!--iframe width="100%" height="1000" src="<#= result.CompareUrl#>"></iframe-->
+            <#} else if (result.IsBranch) {#>
+                <div class="status error">Detected a branch "<#= result.CommitOrBranch#>", but none of the commits are from git-svn.</div>
+            <#}#>
+        </script>
+
+        <script id="CommitTemplate" type="text/html">
+         <li>
+            <b>by <#= author.name #>:</b> 
+            <span>
+                <#if (message.length > 100) {#>
+                   <#= htmlEncode(message.substring(0,100))#>
+                   <a title="<#= message#>" href="#" onclick="$(this).parent().html(htmlEncode(this.title)); return false;">[more...]</a>
+                <# } else { #>
+                  <#= htmlEncode(message)#>
+                <#}#>
+            </span>
+         </li>
+        </script>
+
+        <script id="ErrorTemplate" type="text/html">
+         <div class="status error">
+            <#= message.length > 100 ? message.substring(0,100) + "..." : message #>
+         </div>
+        </script>
+
+        <script id="StatusTemplate" type="text/html">
+         <div class="status">
+            <#= message.length > 100 ? message.substring(0,100) + "..." : message #>
+         </div>
+        </script>
+    </div>
+    <pre id="result" width="100%">
+      
+    </pre>
 </asp:Content>
-
 <asp:Content ID="Content2" ContentPlaceHolderID="head" runat="server">
-
-    <script src="../../Scripts/jquery-1.4.1.js" type="text/javascript"></script>
     <script type="text/javascript">
-    $(
+        var template;
+        var commitTemplate;
+        var errorTemplate;
+
+        var pathTimeout;
+        function scheduleAnalyzePath() {
+            if (pathTimeout != null) {
+                window.clearTimeout(pathTimeout);
+            }
+            pathTimeout = setTimeout(analyzePath, 500)
+        }
+
+        var validate = '<%= Url.Action("Analyze", "ConvertPatch") %>';
+        var convertBase = '<%= Url.Action("DownloadBranchPatch", "ConvertPatch")%>';
+        function analyzePath() {
+            var path = $('#path').val();
+            
+            if (path == lastPath)
+                return;
+
+            var lastPath = path;
+
+            $('input#path').removeClass("success").removeClass("error");
+            $('#pathresult').html(parseTemplate(statusTemplate, {message: "validating..."}));
+            $.post(validate, { path: path }, callback);
+
+        }
+
+        function callback(data) {
+            $('#result').html(JSON.stringify(data));
+            
+            if (data.success && data.result.IsValid) {
+                $('input#path').addClass("success");
+                $('#pathresult').html(parseTemplate(template, data));
+            } else if (!data.success) {
+                $('input#path').addClass("error");
+                $('#pathresult').html(parseTemplate(errorTemplate, { message: data.message }));
+            } else if (!data.result.IsValid) {
+                $('input#path').addClass("error");
+                $('#pathresult').html(parseTemplate(errorTemplate, { message: data.result.ValidationMessage }));
+            }
+        }
+
+        $(function () {
+            template = $("#AnalysisResult").html();
+            commitTemplate = $("#CommitTemplate").html();
+            errorTemplate = $("#ErrorTemplate").html();
+            statusTemplate = $("#StatusTemplate").html();
+
+            $(document).ajaxError(function (event, request, settings, thrownError) {
+                callback({ success: false, message: request.status + ": " + request.statusText });
+            });
+            analyzePath();
+        });
     </script>
 </asp:Content>
