@@ -15,7 +15,7 @@
         patches from your local git repository.</p>
     <div id="caption">
         A github commit or branch url:</div>
-    <input id="path" type="text" value="<%=ViewData["path"] %>" onkeyup="scheduleAnalyzePath()" />
+    <input id="path" type="text" value="<%=ViewData["path"] %>" onkeyup="scheduleAnalyzePath()" onchange="scheduleAnalyzePath()" />
     <div id="pathresult">
         <script id="AnalysisResult" type="text/html">
             <#if (result.IsBranch && result.SvnUrl) {#>
@@ -98,13 +98,17 @@
             var lastPath = path;
 
             $('input#path').removeClass("success").removeClass("error");
+            if (path == "http://github.com/" || path == "") {
+                $('#pathresult').html('');
+                return;
+            }
             $('#pathresult').html(parseTemplate(statusTemplate, { message: "validating..." }));
             $.post(validate, { path: path }, callback);
-
+            
         }
 
         function callback(data) {
-            $('#result').html(JSON.stringify(data));
+            // $('#result').html(JSON.stringify(data));
 
             if (data.success && data.result.IsValid) {
                 $('input#path').addClass("success");

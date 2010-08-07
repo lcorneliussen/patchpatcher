@@ -29,16 +29,22 @@ namespace PatchPatcher.Github
                 .Where(s2 => !String.IsNullOrEmpty(s2))
                 .ToArray();
 
-            var res = new UrlAnalyzeResult
-                                       {
-                                           Path = uri.ToString(),
-                                           IsValid = true,
-                                           IsBranch = segments[2] == "tree",
-                                           IsCommit = segments[2] == "commit",
-                                           User = segments[0],
-                                           Repository = segments[1],
-                                           CommitOrBranch = segments[3]
-                                       };
+            var res = new UrlAnalyzeResult();
+            res.Path = uri.ToString();
+
+            if (segments.Length != 4)
+            {
+                res.IsValid = false;
+                res.ValidationMessage = "Is not a valid github commit or branch.";
+                return res;
+
+            }
+            res.IsValid = true;
+            res.IsBranch = segments[2] == "tree";
+            res.IsCommit = segments[2] == "commit";
+            res.User = segments[0];
+            res.Repository = segments[1];
+            res.CommitOrBranch = segments[3];
 
             if (res.IsBranch)
             {

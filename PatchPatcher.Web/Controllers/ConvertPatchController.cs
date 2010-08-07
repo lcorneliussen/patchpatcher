@@ -24,8 +24,15 @@ namespace PatchPatcher.Web.Controllers
         [HttpPost]
         public ActionResult Analyze(string path)
         {
-            var result = urlAnalyzer().Analyze(new Uri(path));
-            return Json(new { success = true, result }, JsonRequestBehavior.AllowGet);
+            try
+            {
+                var result = urlAnalyzer().Analyze(new Uri(path));
+                return Json(new { success = true, result }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false, message = e.Message }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         private Uri absolutePath()
