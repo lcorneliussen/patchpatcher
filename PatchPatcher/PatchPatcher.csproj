@@ -68,6 +68,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="CorrectNullReferencesStep.cs" />
     <Compile Include="Github\GithubApi.cs" />
     <Compile Include="Github\IGithubApi.cs" />
