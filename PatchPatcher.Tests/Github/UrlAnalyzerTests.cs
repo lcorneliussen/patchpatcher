@@ -3,9 +3,10 @@ using System.Linq;
 using GithubSharp.Core.Models;
 using Moq;
 using NUnit.Framework;
+using PatchPatcher.Github;
 using SharpTestsEx;
 
-namespace PatchPatcher.Github.Tests
+namespace PatchPatcher.Tests.Github
 {
     [TestFixture]
     public class UrlAnalyzerTests
