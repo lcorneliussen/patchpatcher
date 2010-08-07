@@ -1,16 +1,14 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <h1>
-        Patch Patcher</h1>
+    <h1>Git-SVN Patch Utility</h1>
     <p>
         When working with git-svn in the open source world, you sometimes want to submit
         patches for your work that can be applied on the svn repository using TortoiseSVN.
-        But sadly the patche formats are incompatible.</p>
+        But sadly the patch formats are incompatible - Tortoise fails reading git patches.</p>
     <p>
-        Patch Patcher creates patches that are applyable via TortoiseSVN. Just provide the
-        github url of your branch containing the changes or a specific commit and see the
-        magic happen.
+        The Git-SVN Patch Utility creates patches that are applyable via TortoiseSVN. Just provide the
+        github url of your branch containing the changes and see the magic happen.
     </p>
     <p>
         If you do not have your changes online, you can use the commandline version to create
