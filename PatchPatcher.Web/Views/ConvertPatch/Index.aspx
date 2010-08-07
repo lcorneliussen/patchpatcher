@@ -1,16 +1,23 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <h1>Patch Patcher</h1>
-    <p>When working with git-svn in the open source world, you sometimes want to submit patches for your 
-    work that can be applied on the svn repository using TortoiseSVN. But sadly the patche formats are incompatible.</p>
-    <p>Patch Patcher creates patches that are applyable via TortoiseSVN. Just provide the github url of your branch 
-    containing the changes or a specific commit and see the magic happen. </p>
-    <p>If you do not have your changes online, you can use the commandline version to create patches from your local git repository.</p>
-
-    <div id="caption">A github commit or branch url:</div>
-    <input id="path" type="text" value="<%=ViewData["path"] %>"
-        onkeyup="scheduleAnalyzePath()" />
+    <h1>
+        Patch Patcher</h1>
+    <p>
+        When working with git-svn in the open source world, you sometimes want to submit
+        patches for your work that can be applied on the svn repository using TortoiseSVN.
+        But sadly the patche formats are incompatible.</p>
+    <p>
+        Patch Patcher creates patches that are applyable via TortoiseSVN. Just provide the
+        github url of your branch containing the changes or a specific commit and see the
+        magic happen.
+    </p>
+    <p>
+        If you do not have your changes online, you can use the commandline version to create
+        patches from your local git repository.</p>
+    <div id="caption">
+        A github commit or branch url:</div>
+    <input id="path" type="text" value="<%=ViewData["path"] %>" onkeyup="scheduleAnalyzePath()" />
     <div id="pathresult">
         <script id="AnalysisResult" type="text/html">
             <#if (result.IsBranch && result.SvnUrl) {#>
@@ -18,9 +25,10 @@
                 
                 <h3>Options</h3>
                 <ul>
-                  <li><a href="localpatch">Download as patch</a></li>
-                  <li><a href="?path=<#= result.Path#>">Link to this overview</a></li>
-                  <li><a href="<#= result.CompareUrl #>">Show changes online</a></li>
+                  <li><a href="<#= result.PermaLink#>">Link to this overview</a></li>
+                  <li><a href="<#= result.DownloadUrl #>">Download as patch</a></li>
+                  <li><a href="<#= result.ViewUrl #>">View as patch</a></li>
+                  <li><a href="<#= result.CompareUrl #>">Show changes with Github Compare View</a></li>
                 </ul>
 
                 <h3 class="commits">Changes in <#= result.CommitOrBranch#></h3>
@@ -40,7 +48,6 @@
                 <div class="status error">Detected a branch "<#= result.CommitOrBranch#>", but none of the commits are from git-svn.</div>
             <#}#>
         </script>
-
         <script id="CommitTemplate" type="text/html">
          <li>
             <b>by <#= author.name #>:</b> 
@@ -54,13 +61,11 @@
             </span>
          </li>
         </script>
-
         <script id="ErrorTemplate" type="text/html">
          <div class="status error">
             <#= message.length > 100 ? message.substring(0,100) + "..." : message #>
          </div>
         </script>
-
         <script id="StatusTemplate" type="text/html">
          <div class="status">
             <#= message.length > 100 ? message.substring(0,100) + "..." : message #>
@@ -86,24 +91,23 @@
         }
 
         var validate = '<%= Url.Action("Analyze", "ConvertPatch") %>';
-        var convertBase = '<%= Url.Action("DownloadBranchPatch", "ConvertPatch")%>';
         function analyzePath() {
             var path = $('#path').val();
-            
+
             if (path == lastPath)
                 return;
 
             var lastPath = path;
 
             $('input#path').removeClass("success").removeClass("error");
-            $('#pathresult').html(parseTemplate(statusTemplate, {message: "validating..."}));
+            $('#pathresult').html(parseTemplate(statusTemplate, { message: "validating..." }));
             $.post(validate, { path: path }, callback);
 
         }
 
         function callback(data) {
             $('#result').html(JSON.stringify(data));
-            
+
             if (data.success && data.result.IsValid) {
                 $('input#path').addClass("success");
                 $('#pathresult').html(parseTemplate(template, data));
