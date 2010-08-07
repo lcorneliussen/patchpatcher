@@ -79,6 +79,7 @@
         var template;
         var commitTemplate;
         var errorTemplate;
+        var lastPath;
 
         var pathTimeout;
         function scheduleAnalyzePath() {
@@ -95,10 +96,10 @@
             if (path == lastPath)
                 return;
 
-            var lastPath = path;
+            lastPath = path;
 
             $('input#path').removeClass("success").removeClass("error");
-            if (path == "http://github.com/" || path == "") {
+            if (path == "http://github.com/" || path == "http://github.com" || path == "") {
                 $('#pathresult').html('');
                 return;
             }
@@ -108,6 +109,9 @@
         }
 
         function callback(data) {
+            if (data.result.Path != lastPath)
+                return;
+
             // $('#result').html(JSON.stringify(data));
 
             if (data.success && data.result.IsValid) {
