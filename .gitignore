@@ -44,3 +44,5 @@ _ReSharper*/
 
 # Office Temp Files
 ~$*
+
+PatchPatcher.Web/PatchPatcher.Web.Publish.xml
