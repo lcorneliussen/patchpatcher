@@ -14,9 +14,25 @@ namespace PatchPatcher.Tests.Github
         [Test]
         public void UrlAnalyzer_ValidBranch_ExtractsProperties()
         {
+            string url = "http://github.com/user/repo/tree/branch";
             var res =
                 new UrlAnalyzer(new Mock<IGithubApi>().Object).Analyze(
-                    new Uri("http://github.com/user/repo/tree/branch"));
+                    new Uri(url));
+            res.IsValid.Should().Be.True();
+            res.IsBranch.Should().Be.True();
+            res.IsCommit.Should().Be.False();
+            res.User.Should().Be.EqualTo("user");
+            res.Repository.Should().Be.EqualTo("repo");
+            res.CommitOrBranch.Should().Be.EqualTo("branch");
+        }
+
+        [Test]
+        public void UrlAnalyzer_ValidCommitsUrl_IsRecognizedAsBranch()
+        {
+            string url = "http://github.com/user/repo/commits/branch";
+            var res =
+                new UrlAnalyzer(new Mock<IGithubApi>().Object).Analyze(
+                    new Uri(url));
             res.IsValid.Should().Be.True();
             res.IsBranch.Should().Be.True();
             res.IsCommit.Should().Be.False();

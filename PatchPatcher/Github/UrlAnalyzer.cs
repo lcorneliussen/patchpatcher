@@ -40,7 +40,7 @@ namespace PatchPatcher.Github
 
             }
             res.IsValid = true;
-            res.IsBranch = segments[2] == "tree";
+            res.IsBranch = segments[2] == "tree" | segments[2] == "commits";
             res.IsCommit = segments[2] == "commit";
             res.User = segments[0];
             res.Repository = segments[1];
